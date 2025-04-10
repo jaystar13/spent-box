@@ -1,6 +1,6 @@
 ## 📔 서비스명(가칭)
 
-지출박스(SpendBox, MySpend), 지출스캔(SpendScan)
+지출박스(SpentBox, MySpend), 지출스캔(SpendScan)
 
 ---
 
