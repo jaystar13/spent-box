@@ -86,6 +86,4 @@
 
 ## 📁 참고 스케치 및 시안
 
-![image.png](attachment:d534d29b-47bc-466e-bdb4-244aac5b5859:image.png)
-
-![image.png](attachment:a4f0b345-1cde-4a66-8e93-7e07b58be3a4:image.png)
+![alt text](assets/images/home.png)
