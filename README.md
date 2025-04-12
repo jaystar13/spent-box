@@ -86,4 +86,7 @@
 
 ## 📁 참고 스케치 및 시안
 
-![alt text](assets/images/home.png)
+![alt text](assets/images/Home.jpg)
+![alt text](assets/images/Home-empty.jpg)
+![alt text](assets/images/upload.jpg)
+![alt text](assets/images/upload-분석.jpg)
