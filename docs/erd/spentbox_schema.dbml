@@ -1,0 +1,83 @@
+// SpentBox 서비스 DB 모델링
+// 작성일: 2025-04-16
+// 업데이트: categories.keywords → category_keywords 테이블 분리
+
+Table users {
+  id UUID [pk]
+  email varchar
+  password varchar
+  created_at timestamp
+}
+
+Table categories {
+  id UUID [pk]
+  user_id UUID [ref: > users.id]
+  name varchar
+  color varchar
+  created_at timestamp
+}
+
+Table category_keywords {
+  id UUID [pk]
+  category_id UUID [ref: > categories.id]
+  keyword varchar
+  created_at timestamp
+}
+
+Table monthly_expenses {
+  id UUID [pk]
+  user_id UUID [ref: > users.id]
+  category_id UUID [ref: - categories.id]
+  year int         // 연도 (예: 2025)
+  month int        // 월 (예: 4)
+  total_amount decimal  // 해당 월 카테고리 지출 합계
+  created_at timestamp
+}
+
+Table monthly_payment_stats {
+  id UUID [pk]
+  user_id UUID [ref: > users.id]
+  year int
+  month int
+  payment_method varchar
+  total_amount decimal
+  created_at timestamp
+}
+
+Table monthly_expense_details {
+  id UUID [pk]
+  user_id UUID [ref: > users.id]
+  year int
+  month int
+  category_id UUID [ref: - categories.id]
+  payment_method varchar
+  total_amount decimal
+  created_at timestamp
+}
+
+Table upload_histories {
+  id UUID [pk]
+  user_id UUID [ref: > users.id]
+  file_name varchar
+  source varchar
+  uploaded_at timestamp
+}
+
+Table login_logs {
+  id UUID [pk]
+  user_id UUID [ref: > users.id]
+  ip_address varchar
+  user_agent varchar
+  logged_in_at timestamp
+  success boolean
+}
+
+Table audit_logs {
+  id UUID [pk]
+  user_id UUID [ref: > users.id]
+  action varchar
+  table_name varchar
+  record_id UUID
+  changes text
+  created_at timestamp
+}
