@@ -31,9 +31,8 @@
 
 ---
 
+## ERD
+
+![Spent Box ERD](docs/erd/spentbox_erd_v1.png)
+
 자세한 내용은 [여기](https://www.notion.so/1ceaeab8774e80109c53f0ca850f7a5f?pvs=4) 클릭 하여 확인
-
-## 진행 로그
-
-- 2025.04.15: 명명규칙 정리, 약어 목록 정리, DB 모델링 준비
-- 2025.04.16: 기능명세서 초안 작성
