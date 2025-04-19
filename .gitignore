@@ -21,3 +21,6 @@ node_modules/
 # IDE 설정 폴더
 .vscode/
 .idea/
+
+.venv/
+venv/
