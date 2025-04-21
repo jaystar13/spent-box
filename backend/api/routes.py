@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from api.endpoints import expenses
+from backend.api.endpoints import expenses
 
 router = APIRouter()
 

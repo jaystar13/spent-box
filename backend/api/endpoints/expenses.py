@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
-from models.expense import MonthlyExpenseRequest, MonthlyExpenseResponse
-from services.expense_service import save_monthly_expense
+from backend.models.expense import MonthlyExpenseRequest, MonthlyExpenseResponse
+from backend.services.expense_service import save_monthly_expense
 
 router = APIRouter()
 
