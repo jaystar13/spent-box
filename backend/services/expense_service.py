@@ -1,4 +1,4 @@
-from models.expense import MonthlyExpenseRequest
+from backend.models.expense import MonthlyExpenseRequest
 
 
 def save_monthly_expense(user_id: int, payload: MonthlyExpenseRequest):
