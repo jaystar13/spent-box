@@ -36,3 +36,7 @@
 ![Spent Box ERD](docs/erd/spentbox_erd_v1.png)
 
 자세한 내용은 [여기](https://www.notion.so/1ceaeab8774e80109c53f0ca850f7a5f?pvs=4) 클릭 하여 확인
+
+## 테스트 실행
+
+{Root}에서 PYTHONPATH=. pytest -v
