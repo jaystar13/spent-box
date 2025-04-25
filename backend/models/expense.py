@@ -18,6 +18,12 @@ class MonthlyExpenseRequest(BaseModel):
     expenses: List[ExpenseItem]
 
 
+class MonthlyExpenses(BaseModel):
+    year: YearType
+    month: MonthType
+    expenses: List[ExpenseItem]
+
+
 class MonthlyExpenseResponse(BaseModel):
     message: str
-    data: MonthlyExpenseRequest
+    data: MonthlyExpenses
