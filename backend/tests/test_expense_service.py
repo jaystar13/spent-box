@@ -20,8 +20,9 @@ def test_save_monthly_expense(sample_request):
     user_id = 1
     result = save_monthly_expense(user_id, sample_request)
 
-    assert result.year == 2025
-    assert result.month == 4
-    assert len(result.expenses) == 2
-    assert result.expenses[0].category == "식비"
-    assert result.expenses[0].amount == 30000
+    assert result.message == "저장 완료"
+    assert result.data.year == 2025
+    assert result.data.month == 4
+    assert len(result.data.expenses) == 2
+    assert result.data.expenses[0].category == "식비"
+    assert result.data.expenses[0].amount == 30000
