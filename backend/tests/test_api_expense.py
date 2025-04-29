@@ -17,7 +17,7 @@ def test_post_monthly_expense():
     response = client.post("/api/expenses/monthly", json=payload)
 
     assert response.status_code == 200
-    # data = response.json()
+    data = response.json()
 
-    # assert "message" in data
-    # assert data["message"] == "월별 지출이 성공적으로 저장되었습니다."
+    assert "message" in data
+    assert data["message"] == "저장 완료"
