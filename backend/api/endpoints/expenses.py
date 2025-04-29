@@ -14,5 +14,4 @@ def get_current_user_id():
 def create_monthly_expense(
     payload: MonthlyExpenseRequest, user_id: int = Depends(get_current_user_id)
 ):
-    saved = save_monthly_expense(user_id, payload)
-    return {"message": "월별 지출이 성공적으로 저장되었습니다.", "data": saved}
+    return save_monthly_expense(user_id, payload)
