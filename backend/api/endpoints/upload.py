@@ -1,10 +1,11 @@
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 from backend.deps.auth import get_current_user_id
+from backend.services.file_analyzer_service import analyze_uploaded_file
 
 router = APIRouter()
 
 
-@router.post("/upload/analyze")
+@router.post("/analyze")
 async def analyze_uploaded_file_api(
     file: UploadFile = File(...), user_id: int = Depends(get_current_user_id)
 ):
