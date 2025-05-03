@@ -21,3 +21,14 @@ def test_post_monthly_expense():
 
     assert "message" in data
     assert data["message"] == "저장 완료"
+
+    # 데이터 구조 검증
+    assert "data" in data
+    result = data["data"]
+
+    assert result["year"] == 2025
+    assert result["month"] == 4
+    assert isinstance(result["expenses"], list)
+    assert len(result["expenses"]) == 2
+    assert result["expenses"][0]["category"] == "식비"
+    assert result["expenses"][0]["amount"] == 300000
