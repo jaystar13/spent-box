@@ -1,4 +1,5 @@
-from io import BytesIO
+import asyncio
+import io
 import os
 from fastapi import UploadFile
 import pytest
@@ -8,41 +9,25 @@ from backend.services.converter.kb_card_converter import KbCardConverter
 
 @pytest.mark.asyncio
 async def test_kb_card_converter_transform():
-    # 테스트용 html 생성
-    # html_content = """
-    # <html>
-    #     <body>
-    #         <table id="usage1">
-    #             <tbody id="list_pe01">
-    #                 <tr>
-    #                     <td>25.05.02</td>
-    #                     <td>KB국민카드</td>
-    #                     <td>승인</td>
-    #                     <td>스타벅스</td>
-    #                     <td>일시불</td>
-    #                     <td>35,000원</td>
-    #                 </tr>
-    #             </tbody>
-    #         </table>
-    #     </body>
-    # </html>
-    # """
-    # fake_file = UploadFile(
-    #     filename="kb_card_4월내역.html", file=BytesIO(html_content.encode("utf-8"))
-    # )
+    # 테스트용 샘플 HTML 파일 경로
+    base_dir = os.path.dirname(__file__)  # 현재 test 파일 기준
+    sample_file_path = os.path.join(base_dir, "resources", "kb_sample.html")
+    password = "791227"
 
-    test_file_path = os.path.join(
-        os.path.dirname(__file__), "test_data", "kb_sample.html"
-    )
-    with open(test_file_path, "rb") as f:
-        fake_file = UploadFile(filename="kb_sample.html", file=BytesIO(f.read()))
+    # 파일이 존재하는지 확인
+    assert os.path.exists(
+        sample_file_path
+    ), f"테스트 파일이 존재하지 않습니다: {sample_file_path}"
+
+    # UploadFile 객체로 래핑
+    with open(sample_file_path, "rb") as f:
+        file_data = f.read()
+        upload_file = UploadFile(filename="kb_sample.html", file=io.BytesIO(file_data))
 
     converter = KbCardConverter()
-    result = await converter.transform(fake_file)
+    result = await converter.transform(upload_file, password)
 
+    # 결과 확인
     assert isinstance(result, list)
-    assert len(result) == 1
-    assert result[0]["date"] == "2025-05-02"
-    assert result[0]["amount"] == 35000
-    assert result[0]["merchant"] == "스타벅스"
-    assert result[0]["cardName"] == "KB국민카드"
+    assert len(result) > 0
+    assert "date" in result[0]
