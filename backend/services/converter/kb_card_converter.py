@@ -1,7 +1,10 @@
+import os
+import tempfile
 from fastapi import UploadFile
 from backend.services.converter.base_converter import BaseConverter
 import pandas as pd
 from bs4 import BeautifulSoup
+from playwright.async_api import async_playwright
 
 
 class KbCardConverter(BaseConverter):
@@ -9,16 +12,20 @@ class KbCardConverter(BaseConverter):
     def is_supported_file(self, file: UploadFile):
         return file.filename.endswith((".html", ".htm"))
 
-    async def transform(self, file: UploadFile):
-        df = await self.parse_raw(file)
+    async def transform(self, file: UploadFile, password: str):
+        df = await self.parse_raw(file, password)
         normalized = self.normalize(df)
         return normalized.to_dict(orient="records")
 
-    async def parse_raw(self, file: UploadFile) -> pd.DataFrame:
+    async def parse_raw(self, file: UploadFile, password: str) -> pd.DataFrame:
         contents = await file.read()
+        print(f"contents: {contents}")
         soup = BeautifulSoup(contents, "html.parser")
 
         table = soup.find("table", id="usage1")
+        if not table:
+            raise ValueError("usage1 테이블을 찾을 수 없습니다.")
+
         tbody = table.find("tbody", id="list_pe01")
         rows = tbody.find_all("tr")
 
