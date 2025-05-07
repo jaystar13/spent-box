@@ -1,54 +1,41 @@
-import os
-import tempfile
+from io import BytesIO
 from fastapi import UploadFile
 from backend.services.converter.base_converter import BaseConverter
 import pandas as pd
-from bs4 import BeautifulSoup
-from playwright.async_api import async_playwright
 
 
 class KbCardConverter(BaseConverter):
 
     def is_supported_file(self, file: UploadFile):
-        return file.filename.endswith((".html", ".htm"))
+        return file.filename.endswith((".xls", ".xlsx"))
 
-    async def transform(self, file: UploadFile, password: str):
-        df = await self.parse_raw(file, password)
+    async def transform(self, file: UploadFile):
+        df = await self.parse_raw(file)
         normalized = self.normalize(df)
         return normalized.to_dict(orient="records")
 
-    async def parse_raw(self, file: UploadFile, password: str) -> pd.DataFrame:
+    async def parse_raw(self, file: UploadFile) -> pd.DataFrame:
         contents = await file.read()
-        print(f"contents: {contents}")
-        soup = BeautifulSoup(contents, "html.parser")
+        df = pd.read_excel(BytesIO(contents), sheet_name=0, header=1)
 
-        table = soup.find("table", id="usage1")
-        if not table:
-            raise ValueError("usage1 테이블을 찾을 수 없습니다.")
+        # 잘못된 행 제거
+        df = df[df["이용일자"] != "이용일자"]
+        df = df[df["이용하신 가맹점"].notna()]
+        df = df[~df["이용하신 가맹점"].astype(str).str.contains("소계")]
 
-        tbody = table.find("tbody", id="list_pe01")
-        rows = tbody.find_all("tr")
+        # 필요한 컬럼 추출 및 이름 변경
+        df = df[["이용일자", "이용카드", "이용하신 가맹점", "이용금액"]].copy()
+        df.columns = ["date", "card_type", "merchant", "amount"]
 
-        data = []
+        # 카드명 치환
+        card_map = {
+            "마스터058": "가족카드",
+            "마스터834": "본인카드",
+        }
 
-        for row in rows:
-            cols = row.find_all("td")
-            if len(cols) < 6:
-                continue  # 필요한 데이터가 부족하면 건너뜀
+        df["card_type"] = df["card_type"].map(card_map).fillna(df["card_type"])
 
-            card_name = cols[1].get_text(strip=True)  # 이용카드
-
-            if card_name or card_name.strip() != "":
-                data.append(
-                    {
-                        "date": cols[0].get_text(strip=True),
-                        "cardName": card_name,
-                        "merchant": cols[3].get_text(strip=True),
-                        "amount": cols[5].get_text(strip=True),
-                    }
-                )
-
-        return pd.DataFrame(data)
+        return df
 
     def normalize(self, df: pd.DataFrame) -> pd.DataFrame:
         df["amount"] = df["amount"].apply(self._normalize_amount)

@@ -1,3 +1,4 @@
+from io import BytesIO
 from bs4 import BeautifulSoup
 import pandas as pd
 from fastapi import UploadFile
@@ -16,32 +17,20 @@ class HanaCardConverter(BaseConverter):
 
     async def parse_raw(self, file: UploadFile) -> pd.DataFrame:
         contents = await file.read()
-        soup = BeautifulSoup(contents, "html.parser")
+        df = pd.read_excel(BytesIO(contents), sheet_name=0)
+        df.columns = df.columns.str.strip
 
-        rows = soup.find_all("tr")  # 모든 행 찾기
+        if not {"승인일자", "가맹점명", "승인금액"}.issubset(df.columns):
+            raise ValueError(
+                "필수 컬럼(승인일자, 가맹점명, 승인금액)이 누락되었습니다."
+            )
 
-        data = []
+        df = df[["승인일자", "가맹점명", "승인금액"]]
+        df = df.rename(
+            columns={"승인일자": "date", "가맹점명": "merchant", "승인금액": "amount"}
+        )
 
-        for row in rows:
-            cols = row.find_all("td")
-            if len(cols) < 3:
-                continue  # 필요한 데이터가 부족하면 건너뜀
-
-            usage_date = cols[0].get_text(strip=True)  # 이용일자
-            merchant = cols[1].get_text(strip=True)  # 이용가맹점(은행)
-            amount = cols[2].get_text(strip=True)  # 이용금액
-
-            if "/" in usage_date and amount.replace(",", "").isdigit():
-                data.append(
-                    {
-                        "date": cols[0].get_text(strip=True),
-                        "cardName": "하나카드",
-                        "merchant": merchant,
-                        "amount": amount,
-                    }
-                )
-
-        return pd.DataFrame(data)
+        return df
 
     def normalize(self, df: pd.DataFrame) -> pd.DataFrame:
         df["amount"] = df["amount"].apply(self._normalize_amount)
