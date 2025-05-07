@@ -11,8 +11,7 @@ from backend.services.converter.kb_card_converter import KbCardConverter
 async def test_kb_card_converter_transform():
     # 테스트용 샘플 HTML 파일 경로
     base_dir = os.path.dirname(__file__)  # 현재 test 파일 기준
-    sample_file_path = os.path.join(base_dir, "resources", "kb_sample.html")
-    password = "791227"
+    sample_file_path = os.path.join(base_dir, "resources", "kb_sample.xlsx")
 
     # 파일이 존재하는지 확인
     assert os.path.exists(
@@ -22,12 +21,14 @@ async def test_kb_card_converter_transform():
     # UploadFile 객체로 래핑
     with open(sample_file_path, "rb") as f:
         file_data = f.read()
-        upload_file = UploadFile(filename="kb_sample.html", file=io.BytesIO(file_data))
+        upload_file = UploadFile(filename="kb_sample.xlsx", file=io.BytesIO(file_data))
 
     converter = KbCardConverter()
-    result = await converter.transform(upload_file, password)
+    result = await converter.transform(upload_file)
 
     # 결과 확인
     assert isinstance(result, list)
     assert len(result) > 0
-    assert "date" in result[0]
+    assert all(
+        "date" in item and "merchant" in item and "amount" in item for item in result
+    )
