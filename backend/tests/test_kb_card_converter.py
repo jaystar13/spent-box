@@ -1,5 +1,6 @@
 import asyncio
 import io
+import json
 import os
 from fastapi import UploadFile
 import pytest
@@ -25,6 +26,8 @@ async def test_kb_card_converter_transform():
 
     converter = KbCardConverter()
     result = await converter.transform(upload_file)
+
+    print(json.dumps(result, indent=2, ensure_ascii=False))
 
     # 결과 확인
     assert isinstance(result, list)
