@@ -22,6 +22,7 @@ class KbCardConverter(BaseConverter):
         df = df[df["이용일자"] != "이용일자"]
         df = df[df["이용하신 가맹점"].notna()]
         df = df[~df["이용하신 가맹점"].astype(str).str.contains("소계")]
+        df = df[df["이용일자"].notna() & (df["이용일자"].astype(str).str.strip() != "")]
 
         # 필요한 컬럼 추출 및 이름 변경
         df = df[["이용일자", "이용카드", "이용하신 가맹점", "이용금액"]].copy()
