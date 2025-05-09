@@ -11,10 +11,11 @@ class BaseConverter(ABC):
         """처리 가능여부"""
         pass
 
-    @abstractmethod
     async def transform(self, file: UploadFile) -> List[Dict[str, Any]]:
         """파일 데이터를 정형화된 리스트로 변환"""
-        pass
+        df = await self.parse_raw(file)
+        normalized = self.normalize(df)
+        return normalized.to_dict(orient="records")
 
     @abstractmethod
     async def parse_raw(self, file: UploadFile) -> Any:
