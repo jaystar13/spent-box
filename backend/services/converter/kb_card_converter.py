@@ -9,11 +9,6 @@ class KbCardConverter(BaseConverter):
     def is_supported_file(self, file: UploadFile):
         return file.filename.endswith((".xls", ".xlsx"))
 
-    async def transform(self, file: UploadFile):
-        df = await self.parse_raw(file)
-        normalized = self.normalize(df)
-        return normalized.to_dict(orient="records")
-
     async def parse_raw(self, file: UploadFile) -> pd.DataFrame:
         contents = await file.read()
         df = pd.read_excel(BytesIO(contents), sheet_name=0, header=1)
