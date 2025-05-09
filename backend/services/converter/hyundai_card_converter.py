@@ -44,7 +44,7 @@ class HyundaiCardConverter(BaseConverter):
 
         # 필요한 컬럼 추출 및 이름 변경
         df = df[["이용일", "가맹점명", "이용금액"]].copy()
-        df.insert(1, "이용카드", "하나카드")
+        df.insert(1, "이용카드", "현대카드")
         df.columns = ["date", "card_type", "merchant", "amount"]
 
         return df
