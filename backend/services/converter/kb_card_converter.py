@@ -25,8 +25,8 @@ class KbCardConverter(BaseConverter):
 
         # 카드명 치환
         card_map = {
-            "마스터058": "가족카드",
-            "마스터834": "본인카드",
+            "마스터058": "KB카드-가족",
+            "마스터834": "KB카드-본인",
         }
 
         df["card_type"] = df["card_type"].map(card_map).fillna(df["card_type"])
