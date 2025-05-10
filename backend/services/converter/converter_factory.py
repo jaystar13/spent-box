@@ -1,10 +1,14 @@
 from backend.services.converter.base_converter import BaseConverter
+from backend.services.converter.hana_card_converter import HanaCardConverter
+from backend.services.converter.hyundai_card_converter import HyundaiCardConverter
 from backend.services.converter.kb_card_converter import KbCardConverter
 
 
-def get_converter(institution: str) -> BaseConverter:
+async def get_converter(institution: str) -> BaseConverter:
     mapping = {
         "kb-card": KbCardConverter,
+        "hyundai-card": HyundaiCardConverter,
+        "hana-card": HanaCardConverter,
     }
 
     cls = mapping.get(institution.lower())
