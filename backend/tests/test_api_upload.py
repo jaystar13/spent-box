@@ -28,7 +28,7 @@ def test_analyze_uploaded_file_api():
                     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 )
             },
-            data={"institution": "kb-card"},
+            data={"institution": "kb-card", "year": "2024", "month": "5"},
         )
 
     print(response.status_code)
