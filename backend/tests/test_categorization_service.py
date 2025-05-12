@@ -40,3 +40,26 @@ def test_categorize(category_data, expenses):
     assert result_dict["교통"]["amount"] == 1250
     assert result_dict["미분류"]["amount"] == 9990
     assert "기타상점" in result_dict["미분류"]["targetItems"]
+
+
+def test_partial_match_categorization():
+    category_data = [
+        {"category": "식비", "items": ["스타벅스"]},
+        {"category": "쇼핑", "items": ["무신사"]},
+    ]
+    expenses = [
+        {"이용일자": "2025-05-01", "가맹정명": "(주)스타벅스 코리아", "이용금액": 5500},
+        {"이용일자": "2025-05-02", "가맹정명": "무신사스토어", "이용금액": 27000},
+        {"이용일자": "2025-05-03", "가맹정명": "기타상점", "이용금액": 9000},
+    ]
+
+    service = ExpenseCategorizationService(category_data)
+    result = service.categorize(expenses, year=2025, month=5)
+
+    result_dict = {entry["category"]: entry for entry in result}
+
+    assert result_dict["식비"]["amount"] == 5500
+    assert result_dict["쇼핑"]["amount"] == 27000
+    assert result_dict["미분류"]["amount"] == 9000
+    assert "(주)스타벅스 코리아" in result_dict["식비"]["targetItems"]
+    assert "무신사스토어" in result_dict["쇼핑"]["targetItems"]
