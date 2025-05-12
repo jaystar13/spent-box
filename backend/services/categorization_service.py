@@ -26,7 +26,11 @@ class ExpenseCategorizationService:
 
             store = entry["가맹정명"]
             amount = entry["이용금액"]
-            category = self.item_to_category.get(store, "미분류")
+            category = "미분류"
+            for keyword, cat in self.item_to_category.items():
+                if keyword in store:
+                    category = cat
+                    break
 
             categorized[category]["amount"] += amount
             categorized[category]["targetItems"].add(store)
