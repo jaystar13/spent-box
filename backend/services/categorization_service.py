@@ -28,6 +28,9 @@ class ExpenseCategorizationService:
             amount = entry["이용금액"]
             category = self.item_to_category.get(store, "미분류")
 
+            categorized[category]["amount"] += amount
+            categorized[category]["targetItems"].add(store)
+
         result = []
         for idx, (category, data) in enumerate(categorized.items(), start=1):
             result.append(
