@@ -20,13 +20,14 @@ class ExpenseCategorizationService:
         categorized = defaultdict(lambda: {"amount": 0, "targetItems": set()})
 
         for entry in expenses:
-            entry_date = datetime.strptime(entry["이용일자"], "%Y-%m-%d")
+            entry_date = datetime.strptime(entry["date"], "%Y-%m-%d")
             if entry_date.year != year or entry_date.month != month:
                 continue
 
-            store = entry["가맹정명"]
-            amount = entry["이용금액"]
+            store = entry["merchant"]
+            amount = entry["amount"]
             category = "미분류"
+
             for keyword, cat in self.item_to_category.items():
                 if keyword in store:
                     category = cat
