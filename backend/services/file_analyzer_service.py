@@ -31,6 +31,5 @@ async def analyze_uploaded_file(file: UploadFile, request: FileAnalyzeRequest) -
         "user_id": request.user_id,
         "institution": request.institution,
         "count": len(converted_data),
-        "data": converted_data,
         "categorized": categorized,
     }
