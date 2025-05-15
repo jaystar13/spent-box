@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from backend.api.routes import router as api_router
 
 app = FastAPI(
-    title="SpenBox API",
+    title="SpentBox API",
     version="1.0.0",
 )
 
