@@ -1,7 +1,7 @@
 import os
 from fastapi.testclient import TestClient
-from backend.deps.auth import get_current_user_id
-from backend.main import app
+from app.deps.auth import get_current_user_id
+from app.main import app
 
 client = TestClient(app)
 

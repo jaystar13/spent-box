@@ -1,7 +1,7 @@
-from backend.services.converter.base_converter import BaseConverter
-from backend.services.converter.hana_card_converter import HanaCardConverter
-from backend.services.converter.hyundai_card_converter import HyundaiCardConverter
-from backend.services.converter.kb_card_converter import KbCardConverter
+from app.services.converter.base_converter import BaseConverter
+from app.services.converter.hana_card_converter import HanaCardConverter
+from app.services.converter.hyundai_card_converter import HyundaiCardConverter
+from app.services.converter.kb_card_converter import KbCardConverter
 
 
 def get_converter(institution: str) -> BaseConverter:

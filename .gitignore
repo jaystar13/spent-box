@@ -25,8 +25,11 @@ node_modules/
 .venv/
 venv/
 
+# pytest
+.pytest_cache/
+
 # 개발 전용 스크립트 무시
 start.sh
 
 # 테스트 데이터 제외
-backend/tests/resources/
+backend/app/tests/resources/

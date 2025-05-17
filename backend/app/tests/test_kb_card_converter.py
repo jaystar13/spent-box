@@ -4,7 +4,7 @@ import os
 from fastapi import UploadFile
 import pytest
 
-from backend.services.converter.kb_card_converter import KbCardConverter
+from app.services.converter.kb_card_converter import KbCardConverter
 
 
 @pytest.mark.asyncio

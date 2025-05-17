@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
-from backend.deps.auth import get_current_user_id
-from backend.schemas.file_analyzer_schemas import FileAnalyzeRequest
-from backend.services.file_analyzer_service import analyze_uploaded_file
+from app.deps.auth import get_current_user_id
+from app.schemas.file_analyzer_schemas import FileAnalyzeRequest
+from app.services.file_analyzer_service import analyze_uploaded_file
 
 router = APIRouter()
 

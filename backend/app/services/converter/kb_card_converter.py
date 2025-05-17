@@ -1,6 +1,6 @@
 from io import BytesIO
 from fastapi import UploadFile
-from backend.services.converter.base_converter import BaseConverter
+from app.services.converter.base_converter import BaseConverter
 import pandas as pd
 
 

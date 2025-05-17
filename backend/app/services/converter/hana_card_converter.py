@@ -1,8 +1,7 @@
 from io import BytesIO
-from bs4 import BeautifulSoup
 import pandas as pd
 from fastapi import UploadFile
-from backend.services.converter.base_converter import BaseConverter
+from app.services.converter.base_converter import BaseConverter
 
 
 class HanaCardConverter(BaseConverter):

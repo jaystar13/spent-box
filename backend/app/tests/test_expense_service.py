@@ -1,7 +1,7 @@
 import pytest
 
-from backend.models.expense import MonthlyExpenseRequest
-from backend.services.expense_service import save_monthly_expense
+from app.models.expense import MonthlyExpenseRequest
+from app.services.expense_service import save_monthly_expense
 
 
 @pytest.fixture

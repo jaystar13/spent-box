@@ -1,4 +1,4 @@
-from backend.models.expense import (
+from app.models.expense import (
     MonthlyExpenseRequest,
     MonthlyExpenseResponse,
     MonthlyExpenses,

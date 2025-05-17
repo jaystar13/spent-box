@@ -2,10 +2,10 @@ from datetime import datetime
 from typing import Any
 from fastapi import UploadFile
 
-from backend.repositories.category_repository import get_user_categories
-from backend.schemas.file_analyzer_schemas import FileAnalyzeRequest
-from backend.services.categorization_service import ExpenseCategorizationService
-from backend.services.converter.converter_factory import get_converter
+from app.repositories.category_repository import get_user_categories
+from app.schemas.file_analyzer_schemas import FileAnalyzeRequest
+from app.services.categorization_service import ExpenseCategorizationService
+from app.services.converter.converter_factory import get_converter
 
 
 async def analyze_uploaded_file(file: UploadFile, request: FileAnalyzeRequest) -> Any:

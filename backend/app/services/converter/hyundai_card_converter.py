@@ -1,7 +1,7 @@
 from io import BytesIO
 import pandas as pd
 from fastapi import UploadFile, HTTPException
-from backend.services.converter.base_converter import BaseConverter
+from app.services.converter.base_converter import BaseConverter
 
 
 class HyundaiCardConverter(BaseConverter):

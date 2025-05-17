@@ -4,7 +4,7 @@ import os
 from fastapi import UploadFile
 import pytest
 
-from backend.services.converter.hyundai_card_converter import HyundaiCardConverter
+from app.services.converter.hyundai_card_converter import HyundaiCardConverter
 
 
 @pytest.mark.asyncio
@@ -15,7 +15,9 @@ async def test_hyundai_card_converter_transform():
 
     with open(sample_file_path, "rb") as f:
         file_data = f.read()
-        upload_file = UploadFile(filename="kb_sample.xlsx", file=io.BytesIO(file_data))
+        upload_file = UploadFile(
+            filename="hyundai_sample.xlsx", file=io.BytesIO(file_data)
+        )
 
     converter = HyundaiCardConverter()
     result = await converter.transform(upload_file)

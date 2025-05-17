@@ -1,6 +1,6 @@
 import pytest
 
-from backend.services.categorization_service import ExpenseCategorizationService
+from app.services.categorization_service import ExpenseCategorizationService
 
 
 @pytest.fixture

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
-from backend.models.expense import MonthlyExpenseRequest, MonthlyExpenseResponse
-from backend.services.expense_service import save_monthly_expense
-from backend.deps.auth import get_current_user_id
+from app.models.expense import MonthlyExpenseRequest, MonthlyExpenseResponse
+from app.services.expense_service import save_monthly_expense
+from app.deps.auth import get_current_user_id
 
 router = APIRouter()
 
