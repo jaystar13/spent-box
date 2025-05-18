@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from app.schemas.category_schema import CategoryCreate, CategoryRead
 from app.services.category_service import CategoryService
 from app.deps.auth import get_current_user_id
-from database import get_db
+from app.database import get_db
 
 router = APIRouter()
 
