@@ -2,19 +2,6 @@ import uuid
 
 
 def test_create_category(client):
-    user_id = uuid.uuid4()  # 임의 사용자 ID
-
-    # 인증 의존성 오버라이드
-    from app.deps.auth import get_current_user_id
-
-    def override_get_current_user_id():
-        class DummyUser:
-            id = user_id
-
-        return DummyUser()
-
-    client.app.dependency_overrides[get_current_user_id] = override_get_current_user_id
-
     # 테스트 데이터
     payload = {
         "name": "식비",
