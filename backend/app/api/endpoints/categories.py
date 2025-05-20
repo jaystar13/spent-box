@@ -14,4 +14,4 @@ def create_category(
     db: Session = Depends(get_db),
     user=Depends(get_current_user_id),
 ):
-    return CategoryService.create_category(db, user.id, data)
+    return CategoryService.create_category(db, user, data)
