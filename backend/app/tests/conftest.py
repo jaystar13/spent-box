@@ -16,27 +16,32 @@ TestingSessionLocal = sessionmaker(bind=engine)
 TEST_USER_ID = 1
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="module")
 def db():
     print("테이블 생성 시작")  # 👉 디버깅용
     Base.metadata.create_all(bind=engine)
     print("테이블 목록:", Base.metadata.tables.keys())  # 👉 디버깅용
-    db = TestingSessionLocal()
-    yield db
-    db.close()
+    db_session = TestingSessionLocal()
+    yield db_session
+    db_session.close()
     Base.metadata.drop_all(bind=engine)
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="module")
 def client(db):
+    from fastapi import FastAPI
     from fastapi.testclient import TestClient
+    from app.api.endpoints import user_api
     from app.database import get_db
 
-    app.dependency_overrides[get_db] = lambda: db
+    test_app = FastAPI()
+    test_app.include_router(user_api.router, prefix="/api/users", tags=["users"])
+    test_app.dependency_overrides[get_db] = lambda: db
+
     with TestClient(app) as test_client:
         yield test_client
 
-    app.dependency_overrides.clear()
+    test_app.dependency_overrides.clear()
 
 
 @pytest.fixture(scope="function")
