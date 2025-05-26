@@ -2,7 +2,7 @@ from typing import Any
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from app.models2 import User, UserPublic
+from app.models import User, UserPublic
 from app.api.deps import SessionDep
 from app.core.security import get_password_hash
 

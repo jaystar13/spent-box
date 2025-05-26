@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from app import crud
 from app.core.config import settings
 from app.api.deps import SessionDep, get_current_active_superuser
-from app.models2 import UserCreate, UserPublic
+from app.models import UserCreate, UserPublic
 from app.utils import generate_new_account_email, send_email
 
 
