@@ -13,12 +13,12 @@ class CategoryBase(SQLModel):
 
 
 class CategoryCreate(CategoryBase):
-    user_id: int
+    pass
 
 
 class Category(CategoryBase, table=True):
     id: int = Field(default=None, primary_key=True)
-    user_id: int = Field(foreign_key="user.id")
+    user_id: uuid.UUID = Field(foreign_key="user.id")
     created_at: datetime = Field(default_factory=datetime.now)
     keywords: List["CategoryKeyword"] = Relationship(
         back_populates="category", sa_relationship_kwargs={"cascade": "all, delete"}

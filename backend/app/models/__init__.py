@@ -13,3 +13,7 @@ from .category_keyword import (
     CategoryKeywordPublic,
     CategoryKeywordCreate,
 )
+
+from sqlmodel import SQLModel
+
+__all__ = ["SQLModel"]
