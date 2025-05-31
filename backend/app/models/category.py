@@ -17,7 +17,7 @@ class CategoryCreate(CategoryBase):
 
 
 class Category(CategoryBase, table=True):
-    id: int = Field(default=None, primary_key=True)
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
     user_id: uuid.UUID = Field(foreign_key="user.id")
     created_at: datetime = Field(default_factory=datetime.now)
     keywords: List["CategoryKeyword"] = Relationship(
@@ -26,5 +26,5 @@ class Category(CategoryBase, table=True):
 
 
 class CategoryPublic(CategoryBase):
-    id: int
+    id: uuid.UUID
     created_at: datetime

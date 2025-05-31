@@ -1,4 +1,5 @@
 from datetime import datetime
+import uuid
 from sqlmodel import SQLModel, Field, Relationship
 from typing import Optional, TYPE_CHECKING
 
@@ -11,16 +12,16 @@ class CategoryKeywordBase(SQLModel):
 
 
 class CategoryKeywordCreate(CategoryKeywordBase):
-    category_id: int
+    category_id: uuid.UUID
 
 
 class CategoryKeyword(CategoryKeywordBase, table=True):
-    id: int = Field(default=None, primary_key=True)
-    category_id: int = Field(foreign_key="category.id")
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    category_id: uuid.UUID = Field(foreign_key="category.id")
     created_at: datetime = Field(default_factory=datetime.now)
     category: Optional["Category"] = Relationship(back_populates="keywords")
 
 
 class CategoryKeywordPublic(CategoryKeywordBase):
-    id: int
+    id: uuid.UUID
     created_at: datetime

@@ -1,8 +1,8 @@
-"""create tables
+"""Initial schema
 
-Revision ID: 268983abc358
+Revision ID: c4ab770a75ee
 Revises:
-Create Date: 2025-05-28 21:45:13.964050
+Create Date: 2025-05-31 21:31:36.592059
 
 """
 
@@ -14,7 +14,7 @@ import sqlmodel
 
 
 # revision identifiers, used by Alembic.
-revision: str = "268983abc358"
+revision: str = "c4ab770a75ee"
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -44,13 +44,12 @@ def upgrade() -> None:
         "category",
         sa.Column("name", sqlmodel.sql.sqltypes.AutoString(length=100), nullable=False),
         sa.Column("color", sqlmodel.sql.sqltypes.AutoString(length=20), nullable=False),
-        sa.Column("id", sa.Integer(), nullable=False),
+        sa.Column("id", sa.Uuid(), nullable=False),
         sa.Column("user_id", sa.Uuid(), nullable=False),
         sa.Column("created_at", sa.DateTime(), nullable=False),
         sa.ForeignKeyConstraint(
             ["user_id"],
             ["user.id"],
-            ondelete="CASCADE",
         ),
         sa.PrimaryKeyConstraint("id"),
     )
@@ -72,8 +71,8 @@ def upgrade() -> None:
         sa.Column(
             "keyword", sqlmodel.sql.sqltypes.AutoString(length=100), nullable=False
         ),
-        sa.Column("id", sa.Integer(), nullable=False),
-        sa.Column("category_id", sa.Integer(), nullable=False),
+        sa.Column("id", sa.Uuid(), nullable=False),
+        sa.Column("category_id", sa.Uuid(), nullable=False),
         sa.Column("created_at", sa.DateTime(), nullable=False),
         sa.ForeignKeyConstraint(
             ["category_id"],
