@@ -18,6 +18,6 @@ def test_create_category(
     assert response.status_code == 200
     content = response.json()
     assert content["name"] == data["name"]
-    assert content["color"] == data["name"]
+    assert content["color"] == data["color"]
     assert "id" in content
     assert "created_at" in content
