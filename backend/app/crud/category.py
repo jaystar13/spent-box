@@ -25,7 +25,9 @@ def create_category(
 def create_category_keyword(
     *, session: Session, keyword_in: CategoryKeywordCreate
 ) -> CategoryKeyword:
-    db_keyword = CategoryKeyword.model_validate(keyword_in)
+    db_keyword = CategoryKeyword(
+        category_id=keyword_in.category_id, keyword=keyword_in.keyword
+    )
     session.add(db_keyword)
     session.commit()
     session.refresh(db_keyword)
