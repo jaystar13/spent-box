@@ -12,6 +12,7 @@ from .category_keyword import (
     CategoryKeywordBase,
     CategoryKeywordPublic,
     CategoryKeywordCreate,
+    CategoryWithKeywordsCreate,
 )
 
 from sqlmodel import SQLModel

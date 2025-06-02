@@ -1,9 +1,9 @@
 from typing import Any
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, status
 
 from app import crud
 from app.api.deps import SessionDep, CurrentUser
-from app.models import CategoryCreate, CategoryPublic
+from app.models import CategoryCreate, CategoryPublic, CategoryWithKeywordsCreate
 
 router = APIRouter(prefix="/categories", tags=["categories"])
 
@@ -21,3 +21,15 @@ def create_category(
     return crud.create_category(
         session=session, current_user=current_user, category_in=category_in
     )
+
+
+@router.post(
+    "/with-keywords", response_model=CategoryPublic, status_code=status.HTTP_201_CREATED
+)
+def create_category_with_keywords(
+    *,
+    session: SessionDep,
+    current_user: CurrentUser,
+    category_in: CategoryWithKeywordsCreate
+) -> Any:
+    return crud.create_category_with_keywords(session, current_user, category_in)
