@@ -32,4 +32,6 @@ def create_category_with_keywords(
     current_user: CurrentUser,
     category_in: CategoryWithKeywordsCreate
 ) -> Any:
-    return crud.create_category_with_keywords(session, current_user, category_in)
+    return crud.create_category_with_keywords(
+        session=session, current_user=current_user, data=category_in
+    )

@@ -21,7 +21,10 @@ def create_category_keyword(
 
 
 def create_category_with_keywords(
-    *, session: Session, current_user: User, data: CategoryWithKeywordsCreate
+    *,
+    session: Session,
+    current_user: User,
+    data: CategoryWithKeywordsCreate,
 ) -> Category:
     category = Category(name=data.name, color=data.color, user_id=current_user.id)
     session.add(category)
