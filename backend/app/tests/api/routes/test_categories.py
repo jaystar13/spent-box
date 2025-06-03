@@ -21,3 +21,29 @@ def test_create_category(
     assert content["color"] == data["color"]
     assert "id" in content
     assert "created_at" in content
+
+
+def test_create_categor_with_keywords(
+    client: TestClient, superuser_token_headers: dict[str, str]
+):
+    payload = {
+        "name": "식비",
+        "color": "#FF5733",
+        "keywords": ["편의점", "커피숍", "배달의민족"],
+    }
+
+    response = client.post(
+        f"{settings.API_V1_STR}/categories/with-keywords",
+        headers=superuser_token_headers,
+        json=payload,
+    )
+
+    assert response.status_code == 201
+    data = response.json()
+    assert data["name"] == "식비"
+    assert len(data["keywords"]) == 3
+    assert {k["keyword"] for k in data["keywords"]} == {
+        "편의점",
+        "커피숍",
+        "배달의민족",
+    }

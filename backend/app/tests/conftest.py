@@ -57,9 +57,8 @@ from sqlmodel import Session, delete
 from app.core.config import settings
 from app.core.db import engine, init_db
 from app.main import app
-from app.models import Item, User
+from app.models import Item, User, Category, CategoryKeyword
 from app.tests.utils.utils import get_superuser_token_headers
-from app.models.category import Category
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -67,6 +66,7 @@ def db() -> Generator[Session, None, None]:
     with Session(engine) as session:
         init_db(session)
         yield session
+        session.exec(delete(CategoryKeyword))
         session.exec(delete(Category))
         session.exec(delete(Item))
         session.exec(delete(User))
