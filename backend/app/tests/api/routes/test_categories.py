@@ -40,6 +40,7 @@ def test_create_categor_with_keywords(
 
     assert response.status_code == 201
     data = response.json()
+    print(f"Data : {data}")
     assert data["name"] == "식비"
     assert len(data["keywords"]) == 3
     assert {k["keyword"] for k in data["keywords"]} == {
