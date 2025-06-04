@@ -3,7 +3,12 @@ from fastapi import APIRouter, status
 
 from app import crud
 from app.api.deps import SessionDep, CurrentUser
-from app.models import CategoryCreate, CategoryPublic, CategoryWithKeywordsCreate
+from app.models import (
+    CategoryCreate,
+    CategoryPublic,
+    CategoryWithKeywordsCreate,
+    CategoryWithKeywordsPublic,
+)
 
 router = APIRouter(prefix="/categories", tags=["categories"])
 
@@ -24,7 +29,9 @@ def create_category(
 
 
 @router.post(
-    "/with-keywords", response_model=CategoryPublic, status_code=status.HTTP_201_CREATED
+    "/with-keywords",
+    response_model=CategoryWithKeywordsPublic,
+    status_code=status.HTTP_201_CREATED,
 )
 def create_category_with_keywords(
     *,

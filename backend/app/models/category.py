@@ -4,7 +4,9 @@ from sqlmodel import SQLModel, Field, Relationship
 from typing import List, TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from .category_keyword import CategoryKeyword
+    from .category_keyword import CategoryKeyword, CategoryKeywordPublic
+else:
+    from app.models.category_keyword import CategoryKeywordPublic
 
 
 class CategoryBase(SQLModel):
@@ -28,3 +30,13 @@ class Category(CategoryBase, table=True):
 class CategoryPublic(CategoryBase):
     id: uuid.UUID
     created_at: datetime
+
+
+class CategoryWithKeywordsPublic(CategoryPublic):
+    keywords: List["CategoryKeywordPublic"]
+
+    class Config:
+        orm_mode = True
+
+
+CategoryWithKeywordsPublic.model_rebuild()
