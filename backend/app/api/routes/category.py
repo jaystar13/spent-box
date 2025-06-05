@@ -3,11 +3,18 @@ from fastapi import APIRouter, status
 
 from app import crud
 from app.api.deps import SessionDep, CurrentUser
-from app.models import (
-    CategoryCreate,
+
+# from app.models import (
+#     CategoryCreate,
+#     CategoryPublic,
+#     CategoryWithKeywordsCreate,
+#     CategoryWithKeywordsPublic,
+# )
+from app.schemas import (
     CategoryPublic,
-    CategoryWithKeywordsCreate,
+    CategoryCreate,
     CategoryWithKeywordsPublic,
+    CategoryWithKeywordsCreate,
 )
 
 router = APIRouter(prefix="/categories", tags=["categories"])

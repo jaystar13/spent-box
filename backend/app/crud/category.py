@@ -1,9 +1,9 @@
 from sqlmodel import Session
 from app.models import (
     Category,
-    CategoryCreate,
     User,
 )
+from app.schemas import CategoryCreate
 
 
 def create_category(

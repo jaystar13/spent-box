@@ -1,19 +1,12 @@
 from datetime import datetime
 import uuid
-from pydantic import BaseModel
-from sqlmodel import SQLModel, Field, Relationship
-from typing import List, Optional, TYPE_CHECKING
+from sqlmodel import Field, Relationship
+from typing import Optional, TYPE_CHECKING
+
+from app.schemas.category_keyword import CategoryKeywordBase
 
 if TYPE_CHECKING:
     from .category import Category
-
-
-class CategoryKeywordBase(SQLModel):
-    keyword: str = Field(max_length=100)
-
-
-class CategoryKeywordCreate(CategoryKeywordBase):
-    category_id: uuid.UUID
 
 
 class CategoryKeyword(CategoryKeywordBase, table=True):
@@ -22,14 +15,3 @@ class CategoryKeyword(CategoryKeywordBase, table=True):
     keyword: str
     created_at: datetime = Field(default_factory=datetime.now)
     category: Optional["Category"] = Relationship(back_populates="keywords")
-
-
-class CategoryKeywordPublic(CategoryKeywordBase):
-    id: uuid.UUID
-    created_at: datetime
-
-
-class CategoryWithKeywordsCreate(BaseModel):
-    name: str
-    color: str
-    keywords: List[str]

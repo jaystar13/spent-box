@@ -2,9 +2,11 @@ from sqlmodel import Session
 from app.models import (
     Category,
     CategoryKeyword,
-    CategoryKeywordCreate,
-    CategoryWithKeywordsCreate,
     User,
+)
+from app.schemas import (
+    CategoryWithKeywordsCreate,
+    CategoryKeywordCreate,
 )
 
 
