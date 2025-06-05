@@ -1,5 +1,6 @@
 import uuid
 from datetime import datetime
+from pydantic import ConfigDict
 from sqlmodel import SQLModel, Field, Relationship
 from typing import List, TYPE_CHECKING
 
@@ -35,8 +36,7 @@ class CategoryPublic(CategoryBase):
 class CategoryWithKeywordsPublic(CategoryPublic):
     keywords: List["CategoryKeywordPublic"]
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 CategoryWithKeywordsPublic.model_rebuild()
