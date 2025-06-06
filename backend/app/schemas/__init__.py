@@ -4,6 +4,8 @@ from .category import (
     CategoryKeywordPublic,
     CategoryPublic,
     CategoryWithKeywordsPublic,
+    CategoryDetailRead,
+    CategoryKeywordRead,
 )
 from .category_keyword import (
     CategoryKeywordBase,

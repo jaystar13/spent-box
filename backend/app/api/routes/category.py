@@ -1,20 +1,15 @@
 from typing import Any
+import uuid
 from fastapi import APIRouter, status
 
 from app import crud
 from app.api.deps import SessionDep, CurrentUser
-
-# from app.models import (
-#     CategoryCreate,
-#     CategoryPublic,
-#     CategoryWithKeywordsCreate,
-#     CategoryWithKeywordsPublic,
-# )
 from app.schemas import (
     CategoryPublic,
     CategoryCreate,
     CategoryWithKeywordsPublic,
     CategoryWithKeywordsCreate,
+    CategoryDetailRead,
 )
 
 router = APIRouter(prefix="/categories", tags=["categories"])
@@ -49,3 +44,8 @@ def create_category_with_keywords(
     return crud.create_category_with_keywords(
         session=session, current_user=current_user, data=category_in
     )
+
+
+@router.get("/{category_id}", response_model=CategoryDetailRead)
+def read_category_detail(category_id: uuid.UUID, session: SessionDep):
+    return crud.get_category_with_keywords(session=session, category_id=category_id)

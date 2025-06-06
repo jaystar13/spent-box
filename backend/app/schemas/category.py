@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
 from typing import List
-from pydantic import ConfigDict
+from pydantic import BaseModel, ConfigDict
 from sqlmodel import SQLModel, Field
 
 from app.schemas.category_keyword import CategoryKeywordPublic
@@ -28,3 +28,18 @@ class CategoryWithKeywordsPublic(CategoryPublic):
 
 
 CategoryWithKeywordsPublic.model_rebuild()
+
+
+class CategoryKeywordRead(BaseModel):
+    id: uuid.UUID
+    keyword: str
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class CategoryDetailRead(BaseModel):
+    id: uuid.UUID
+    name: str
+    keywords: List[CategoryKeywordRead]
+
+    model_config = ConfigDict(from_attributes=True)

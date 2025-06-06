@@ -1,4 +1,6 @@
-from sqlmodel import Session
+import uuid
+from fastapi import HTTPException
+from sqlmodel import Session, select
 from app.models import (
     Category,
     User,
@@ -18,3 +20,15 @@ def create_category(
     session.commit()
     session.refresh(db_category)
     return db_category
+
+
+def get_category_with_keywords(*, session: Session, category_id: uuid.UUID):
+    statement = select(Category).where(Category.id == category_id)
+    result = session.exec(statement)
+    category = result.first()
+    if not category:
+        raise HTTPException(status_code=404, detail="Category not found")
+
+    _ = category.keywords
+
+    return category
