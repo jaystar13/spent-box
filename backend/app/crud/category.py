@@ -3,6 +3,7 @@ from fastapi import HTTPException
 from sqlmodel import Session, select
 from app.models import (
     Category,
+    CategoryKeyword,
     User,
 )
 from app.schemas import CategoryCreate
@@ -31,4 +32,15 @@ def get_category_with_keywords(*, session: Session, category_id: uuid.UUID):
 
     _ = category.keywords
 
+    return category
+
+
+def get_category_by_keyword(*, session: Session, keyword: str) -> Category | None:
+    statement = (
+        select(Category)
+        .join(CategoryKeyword)
+        .where(CategoryKeyword.keyword.contains(keyword))
+        .limit(1)
+    )
+    category = session.exec(statement).first()
     return category
