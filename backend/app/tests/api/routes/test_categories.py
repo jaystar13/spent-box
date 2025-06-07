@@ -4,7 +4,7 @@ from fastapi.testclient import TestClient
 from sqlmodel import Session
 
 from app.core.config import settings
-from app.tests.utils.category import create_random_category
+from app.tests.utils.category import create_random_category_with_keywords
 
 
 def test_create_category(
@@ -54,7 +54,7 @@ def test_create_categor_with_keywords(
 def test_read_category_detail(
     client: TestClient, superuser_token_headers: dict[str, str], db: Session
 ):
-    category = create_random_category(db)
+    category = create_random_category_with_keywords(db)
     response = client.get(
         f"{settings.API_V1_STR}/categories/{category.id}",
         headers=superuser_token_headers,

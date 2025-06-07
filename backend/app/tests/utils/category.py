@@ -6,7 +6,7 @@ from app.tests.utils.utils import random_lower_string
 from app.schemas import CategoryWithKeywordsCreate
 
 
-def create_random_category(db: Session):
+def create_random_category_with_keywords(db: Session):
     user = create_random_user(db)
     owner_id = user.id
     assert owner_id is not None
