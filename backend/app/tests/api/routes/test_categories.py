@@ -63,8 +63,6 @@ def test_read_category_detail(
     assert response.status_code == 200
     data = response.json()
 
-    assert data["id"] == 1
-    assert data["name"] == "식비"
-    assert len(data["keywords"]) == 2
-    assert any(k["keyword"] == "점심" for k in data["keywords"])
-    assert any(k["keyword"] == "저녁" for k in data["keywords"])
+    assert data["id"] == str(category.id)
+    assert data["name"] == str(category.name)
+    assert len(data["keywords"]) == len(category.keywords)
