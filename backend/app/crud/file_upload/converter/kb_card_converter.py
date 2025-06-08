@@ -1,0 +1,2 @@
+class KbCardConverter:
+    pass
