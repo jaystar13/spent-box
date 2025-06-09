@@ -1,4 +1,5 @@
 from app.crud.file_upload.converter.base import UploadFileBaseConverter
+from app.crud.file_upload.converter.kb_card_converter import KbCardConverter
 
 
 def get_converter(institution: str) -> UploadFileBaseConverter:
