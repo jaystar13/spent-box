@@ -1,6 +1,8 @@
+from typing import List
 import uuid
 from fastapi import HTTPException
 from sqlmodel import Session, select
+from sqlalchemy.orm import joinedload
 from app.models import (
     Category,
     CategoryKeyword,
@@ -44,3 +46,13 @@ def get_category_by_keyword(*, session: Session, keyword: str) -> Category | Non
     )
     category = session.exec(statement).first()
     return category
+
+
+def get_user_categories(*, session: Session, user: User) -> List[Category]:
+    statement = (
+        select(Category)
+        .where(Category.user_id == user.id)
+        .options(joinedload(Category.keywords))
+    )
+    result = session.exec(statement)
+    return result.all()
