@@ -4,14 +4,16 @@ import os
 from fastapi import UploadFile
 import pytest
 
-from app.services.converter.kb_card_converter import KbCardConverter
+from app import crud
 
 
 @pytest.mark.asyncio
 async def test_kb_card_converter_transform():
     # 테스트용 샘플 HTML 파일 경로
-    base_dir = os.path.dirname(__file__)  # 현재 test 파일 기준
-    sample_file_path = os.path.join(base_dir, "resources", "kb_sample.xlsx")
+    root_path = os.getcwd()
+    sample_file_path = os.path.join(
+        root_path, "app", "tests", "resources", "kb_sample.xlsx"
+    )
 
     # 파일이 존재하는지 확인
     assert os.path.exists(
@@ -23,7 +25,7 @@ async def test_kb_card_converter_transform():
         file_data = f.read()
         upload_file = UploadFile(filename="kb_sample.xlsx", file=io.BytesIO(file_data))
 
-    converter = KbCardConverter()
+    converter = crud.KbCardConverter()
     result = await converter.transform(upload_file)
 
     print(json.dumps(result, indent=2, ensure_ascii=False))

@@ -1,9 +1,11 @@
+from datetime import datetime
 import io
 from fastapi import UploadFile
 import pandas as pd
 
-from app.crud.file_upload.converter.factory import get_converter
+from app import crud
 from app.models.user import User
+from app.api.deps import SessionDep
 
 
 def validate_file(file: UploadFile) -> bool:
@@ -14,7 +16,7 @@ def validate_file(file: UploadFile) -> bool:
 async def analyze_file(
     *, current_user: User, year: int, month: int, institution: str, file: UploadFile
 ) -> dict:
-    converter = get_converter(institution)
+    converter = crud.get_converter(institution)
 
     if not converter.is_supported_file(file):
         raise ValueError(f"{institution} 은 이 파일 형식을 지원하지 않습니다.")
@@ -24,6 +26,8 @@ async def analyze_file(
     now = datetime.now()
     year = year or now.year
     month = month or now.month
+
+    user_categories = crud.get_user_categories(session=SessionDep, user=current_user)
 
     # 사용자별 카테고리 로딩
     # user_categories = await get_user_categories(current_user.id)
