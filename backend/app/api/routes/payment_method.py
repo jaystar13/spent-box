@@ -2,8 +2,13 @@ from typing import List
 import uuid
 from fastapi import APIRouter, HTTPException
 
-from app.schemas import PaymentMethodRead, PaymentMethodCreate, PaymentMethodUpdate
-from app.api.deps import SessionDep
+from app.schemas import (
+    PaymentMethodRead,
+    PaymentMethodCreate,
+    PaymentMethodUpdate,
+    PaymentMethodPublic,
+)
+from app.api.deps import CurrentUser, SessionDep
 from app import crud
 
 router = APIRouter(prefix="/payment-methods", tags=["결제수단"])
@@ -22,12 +27,14 @@ def get_payment_method(payment_method_id: uuid.UUID, session: SessionDep):
     return result
 
 
-@router.post("/", response_model=PaymentMethodRead)
-def create_payment_method(data: PaymentMethodCreate, session: SessionDep):
-    return crud.create_payment_method(session, data)
+@router.post("/", response_model=PaymentMethodPublic)
+def create_payment_method(
+    data: PaymentMethodCreate, session: SessionDep, current_user: CurrentUser
+):
+    return crud.create_payment_method(session, current_user, data)
 
 
-@router.put("/{payment_method_id}", response_model=PaymentMethodRead)
+@router.put("/{payment_method_id}", response_model=PaymentMethodPublic)
 def update_payment_method(
     payment_method_id: uuid.UUID, data: PaymentMethodUpdate, session: SessionDep
 ):

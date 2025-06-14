@@ -3,6 +3,7 @@ import uuid
 from sqlmodel import Session, select
 
 from app.models.payment_method import PaymentMethod
+from app.models.user import User
 from app.schemas.payment_method import PaymentMethodCreate, PaymentMethodUpdate
 
 
@@ -17,8 +18,15 @@ def get_payment_method(
     return session.get(PaymentMethod, payment_method_id)
 
 
-def create_payment_method(session: Session, data: PaymentMethodCreate) -> PaymentMethod:
-    item = PaymentMethod.model_validate(data)
+def create_payment_method(
+    session: Session, current_user: User, data: PaymentMethodCreate
+) -> PaymentMethod:
+    item = PaymentMethod(
+        name=data.name,
+        type=data.type,
+        billing_day=data.billing_day,
+        user_id=current_user.id,
+    )
     session.add(item)
     session.commit()
     session.refresh(item)

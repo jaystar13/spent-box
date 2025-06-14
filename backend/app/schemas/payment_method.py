@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Optional
 import uuid
 from sqlmodel import Field, SQLModel
@@ -21,3 +22,8 @@ class PaymentMethodUpdate(SQLModel):
 
 class PaymentMethodRead(PaymentMethodBase):
     id: uuid.UUID
+
+
+class PaymentMethodPublic(PaymentMethodBase):
+    id: uuid.UUID
+    created_at: datetime

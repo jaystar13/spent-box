@@ -13,4 +13,9 @@ from .category_keyword import (
     CategoryKeywordPublic,
     CategoryWithKeywordsCreate,
 )
-from .payment_method import PaymentMethodRead, PaymentMethodCreate, PaymentMethodUpdate
+from .payment_method import (
+    PaymentMethodRead,
+    PaymentMethodCreate,
+    PaymentMethodUpdate,
+    PaymentMethodPublic,
+)
