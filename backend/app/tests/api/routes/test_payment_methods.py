@@ -5,7 +5,7 @@ from app.core.config import settings
 from app.tests.utils.payment_method import create_random_payment_method
 
 
-def test_payment_method(
+def test_create_payment_method(
     client: TestClient, superuser_token_headers: dict[str, str]
 ) -> None:
     data = {"name": "KB카드", "type": "신용카드", "billing_day": "15"}
