@@ -33,12 +33,6 @@ def analyze_file(
     categorizer = SpentListCategorizer(user_categories)
     categorized = categorizer.categorize(converted_data, year, month)
 
-    # 사용자별 카테고리 로딩
-    # user_categories = await get_user_categories(current_user.id)
-
-    # categorizer = ExpenseCategorizationService(category_data=user_categories)
-    # categorized = categorizer.categorize(converted_data, year=year, month=month)
-
     return {
         "user_id": current_user.id,
         "upload_file": file,

@@ -7,12 +7,12 @@ from app.api.deps import CurrentUser
 router = APIRouter(prefix="/analyze-upload", tags=["analyze"])
 
 
-@router.post
+@router.post("/")
 def analyze_upload(
     current_user: CurrentUser,
     year: int = Form(...),
     month: int = Form(...),
-    institution: str = Form(...),
+    payment_method: str = Form(...),
     file: UploadFile = File(...),
 ):
     # 1. 유효성 체크
@@ -26,8 +26,8 @@ def analyze_upload(
         current_user=current_user,
         year=year,
         month=month,
-        payment_method=institution,
+        payment_method=payment_method,
         file=file,
     )
 
-    return {"status": "success", "institution": institution, "summary": result}
+    return {"status": "success", "institution": payment_method, "summary": result}
