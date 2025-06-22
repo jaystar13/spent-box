@@ -40,3 +40,7 @@
 ## 테스트 실행
 
 {Root}에서 PYTHONPATH=. pytest -v
+
+## 개발 로그
+
+25-06-22: FE개발을 위한 Dart Study
