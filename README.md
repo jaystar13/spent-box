@@ -43,4 +43,4 @@
 
 ## 개발 로그
 
-25-06-28: FE개발을 위한 Flutter Study
+25-06-29: FE개발을 위한 Flutter Study
