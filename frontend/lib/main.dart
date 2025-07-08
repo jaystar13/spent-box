@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/pages/monthly_detail_dage.dart';
+import 'package:frontend/pages/monthly_detail_page.dart';
 
 void main() {
   runApp(const MyApp());
