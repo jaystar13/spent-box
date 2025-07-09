@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/expense_analysis_page.dart';
 
 class ExpenseUploadPage extends StatefulWidget {
   final int year;
@@ -34,7 +35,7 @@ class _ExpenseUploadPageState extends State<ExpenseUploadPage> {
               children: [
                 _buildStepCircle(context, "1", "업로드", true),
                 _buildLine(),
-                _buildStepCircle(context, "2", "분석", true),
+                _buildStepCircle(context, "2", "분석", false),
                 _buildLine(),
                 _buildStepCircle(context, "3", "완료", false),
               ],
@@ -96,10 +97,31 @@ class _ExpenseUploadPageState extends State<ExpenseUploadPage> {
             Row(
               children: [
                 const Spacer(),
-                TextButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(Icons.arrow_forward),
-                  label: const Text('분석'),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => ExpenseAnalysisPage(
+                          year: widget.year,
+                          month: widget.month,
+                        ),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.white,
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text('분석'),
+                      SizedBox(width: 4),
+                      Icon(Icons.arrow_forward),
+                    ],
+                  ),
                 ),
               ],
             ),
