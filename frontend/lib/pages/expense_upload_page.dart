@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/pages/expense_analysis_page.dart';
 
 class ExpenseUploadPage extends StatefulWidget {
   final int year;
@@ -16,7 +15,7 @@ class _ExpenseUploadPageState extends State<ExpenseUploadPage> {
 
   @override
   Widget build(BuildContext context) {
-    String selectedBank = 'AA 카드';
+    //String selectedBank = 'AA 카드';
 
     return Scaffold(
       appBar: AppBar(title: Text('업로드 - ${widget.year}년 ${widget.month}월')),
