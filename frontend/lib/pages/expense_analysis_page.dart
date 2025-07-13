@@ -45,7 +45,10 @@ class _ExpenseUploadPageState extends State<ExpenseAnalysisPage> {
             ),
             const SizedBox(height: 32),
 
-            Text('업로드 분석'),
+            Text(
+              '업로드 분석',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
 
             // 하단 버튼
             Row(

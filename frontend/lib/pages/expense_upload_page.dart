@@ -165,16 +165,59 @@ class _ExpenseUploadPageState extends State<ExpenseUploadPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('업로드 분석'),
+        Text(
+          '업로드 분석',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 8),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text('카테고리별'),
+            TextButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('구성항목 수정'),
+                    content: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        _buildCategoryCard('식비', 80000, ['GS편의점', '스타벅스']),
+                      ],
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: const Text('닫기'),
+                      ),
+                    ],
+                  ),
+                );
+              },
+              child: const Text('구성항목 수정'),
+            ),
+          ],
+        ),
         const SizedBox(height: 8),
         _buildCategoryCard('식비', 80000, ['GS편의점', '스타벅스']),
         _buildCategoryCard('쇼핑', 120000, ['현대백화점', '루이비통']),
         _buildCategoryCard('미분류', 552100, ['신라호텔', '백다방']),
+        Text('결제수단별'),
+        const SizedBox(height: 8),
+        _buildCategoryCard('KB카드', 1500000, []),
+        _buildCategoryCard('우리카드', 2020000, []),
       ],
     );
   }
 
   Widget _buildCategoryCard(String title, int amount, List<String> tags) {
+    if (tags.isEmpty) {
+      return Card(
+        margin: EdgeInsets.only(bottom: 16),
+        child: ListTile(title: Text('$title ${_formatCurrency(amount)}')),
+      );
+    }
     return Card(
       margin: const EdgeInsets.only(bottom: 16),
       child: ExpansionTile(
