@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/category_items_page.dart';
 
 class ExpenseUploadPage extends StatefulWidget {
   final int year;
@@ -176,22 +177,13 @@ class _ExpenseUploadPageState extends State<ExpenseUploadPage> {
             const Text('카테고리별'),
             TextButton(
               onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: const Text('구성항목 수정'),
-                    content: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        _buildCategoryCard('식비', 80000, ['GS편의점', '스타벅스']),
-                      ],
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => CategoryItemsPage(
+                      year: widget.year,
+                      month: widget.month,
                     ),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        child: const Text('닫기'),
-                      ),
-                    ],
                   ),
                 );
               },
