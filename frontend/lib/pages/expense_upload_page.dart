@@ -20,59 +20,59 @@ class _ExpenseUploadPageState extends State<ExpenseUploadPage> {
 
     return Scaffold(
       appBar: AppBar(title: Text('업로드 - ${widget.year}년 ${widget.month}월')),
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '소비내역 업로드',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '소비내역 업로드',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 16),
 
-            // 단계 표시
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildStepCircle(context, "1", "업로드", !_isAnalyzing),
-                _buildLine(),
-                _buildStepCircle(context, "2", "분석", _isAnalyzing),
-                _buildLine(),
-                _buildStepCircle(context, "3", "완료", false),
-              ],
-            ),
-            const SizedBox(height: 32),
+              // 단계 표시
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _buildStepCircle(context, "1", "업로드", !_isAnalyzing),
+                  _buildLine(),
+                  _buildStepCircle(context, "2", "분석", _isAnalyzing),
+                  _buildLine(),
+                  _buildStepCircle(context, "3", "완료", false),
+                ],
+              ),
+              const SizedBox(height: 32),
 
-            _isAnalyzing ? _buildAnalysisSection() : _buildUploadSection(),
+              _isAnalyzing ? _buildAnalysisSection() : _buildUploadSection(),
 
-            const Spacer(),
-
-            // 하단 버튼
-            Row(
-              children: [
-                if (_isAnalyzing)
-                  TextButton.icon(
+              const SizedBox(height: 32), // replaces Spacer
+              Row(
+                children: [
+                  if (_isAnalyzing)
+                    TextButton.icon(
+                      onPressed: () {
+                        setState(() {
+                          _isAnalyzing = false; // 또는 이전 단계로
+                        });
+                      },
+                      icon: const Icon(Icons.arrow_back),
+                      label: const Text('이전'),
+                    ),
+                  const Spacer(),
+                  ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        _isAnalyzing = false; // 또는 이전 단계로
+                        _isAnalyzing = true;
                       });
                     },
-                    icon: const Icon(Icons.arrow_back),
-                    label: const Text('이전'),
+                    child: Text(_isAnalyzing ? '완료' : '분석'),
                   ),
-                const Spacer(),
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      _isAnalyzing = true;
-                    });
-                  },
-                  child: Text(_isAnalyzing ? '완료' : '분석'),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
