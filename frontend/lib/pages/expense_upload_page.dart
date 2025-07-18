@@ -19,7 +19,10 @@ class _ExpenseUploadPageState extends State<ExpenseUploadPage> {
     //String selectedBank = 'AA 카드';
 
     return Scaffold(
-      appBar: AppBar(title: Text('업로드 - ${widget.year}년 ${widget.month}월')),
+      appBar: AppBar(
+        title: Text('업로드 - ${widget.year}년 ${widget.month}월'),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(24.0),

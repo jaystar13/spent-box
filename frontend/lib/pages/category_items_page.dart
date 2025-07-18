@@ -95,7 +95,10 @@ class _CategoryItemsPageState extends State<CategoryItemsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('카테고리 구성항목 수정')),
+      appBar: AppBar(
+        title: Text('카테고리 구성항목 수정'),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      ),
       body: ListView(
         children: categoryChips.entries.map((entry) {
           final isUnclassified = entry.key == '미분류';

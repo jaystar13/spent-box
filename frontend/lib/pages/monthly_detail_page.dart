@@ -15,16 +15,16 @@ class _MonthlyDetailPageState extends State<MonthlyDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('${widget.year}년 ${widget.month}월 상세 내역')),
+      appBar: AppBar(
+        title: Text('${widget.year}년 ${widget.month}월'),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              '${widget.year}년 ${widget.month}월 요약',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
+            Text('내역 요약', style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 16),
             Card(
               elevation: 2,
