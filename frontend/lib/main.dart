@@ -1,6 +1,8 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/monthly_summary_page.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 void main() => runApp(
   MaterialApp(
@@ -15,8 +17,16 @@ void main() => runApp(
   ),
 );
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -101,6 +111,7 @@ class HomePage extends StatelessWidget {
                                   ),
                                 ),
                                 child: TextField(
+                                  controller: emailController,
                                   decoration: InputDecoration(
                                     hintText: "Email or Phone number",
                                     hintStyle: TextStyle(color: Colors.grey),
@@ -118,6 +129,7 @@ class HomePage extends StatelessWidget {
                                   ),
                                 ),
                                 child: TextField(
+                                  controller: passwordController,
                                   obscureText: true,
                                   decoration: InputDecoration(
                                     hintText: "Password",
@@ -143,11 +155,10 @@ class HomePage extends StatelessWidget {
                         duration: Duration(milliseconds: 1600),
                         child: MaterialButton(
                           onPressed: () {
-                            Navigator.push(
+                            login(
                               context,
-                              MaterialPageRoute(
-                                builder: (_) => MonthlySummaryPage(),
-                              ),
+                              emailController.text.trim(),
+                              passwordController.text.trim(),
                             );
                           },
                           height: 50,
@@ -234,6 +245,40 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+Future<void> login(BuildContext context, String email, String password) async {
+  final response = await http.post(
+    Uri.parse('http://localhost:8000/login/access-token'),
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body: {'username': email, 'password': password},
+  );
+
+  if (response.statusCode == 200) {
+    final token = jsonDecode(response.body)['access_token'];
+    print('로그인 성공: $token');
+    // 로그인 성공 시 이동
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => MonthlySummaryPage()),
+    );
+  } else {
+    final error = jsonDecode(response.body)['detail'];
+    print('로그인 실패: $error');
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text('로그인 실패'),
+        content: Text(error.toString()),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text("확인"),
+          ),
+        ],
       ),
     );
   }
