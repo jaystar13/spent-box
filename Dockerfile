@@ -15,6 +15,7 @@ WORKDIR /app
 
 # 5. poetry 관련 파일 복사
 COPY backend/pyproject.toml backend/poetry.lock* /app/backend/
+COPY .env /app/.env
 
 # 6. 종속성 설치
 WORKDIR /app/backend
